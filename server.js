@@ -53,6 +53,31 @@ app.put('/api/team/:id', async (req, res) => {
     }
 });
 
+app.post('/api/team', async (req, res) => {
+    const { id, teamName, roomColor, RoundId } = req.body;
+    try {
+        const newTeam = await Team.create({ id, teamName, roomColor, RoundId });
+        res.status(201).json(newTeam);
+    } catch (error) {
+        res.status(500).json({ error: 'Error adding new team' });
+    }
+});
+
+app.delete('/api/team/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const deleted = await Team.destroy({ where: { id } });
+        if (deleted) {
+            res.json({ message: 'Team deleted successfully' });
+        } else {
+            res.status(404).json({ error: 'Team not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error deleting team' });
+    }
+});
+
 app.put('/api/teams', async (req, res) => {
 
     const teamUpdates = req.body;
