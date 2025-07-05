@@ -895,7 +895,7 @@ const competitionsData2 = [
 const populateDatabase = async () => {
     await sequelize.sync({ force: true });
 
-    for (const competition of competitionsData2) {
+    for (const competition of competitionsData) {
         await Competition.create(competition);
         for (const round of competition.rounds) {
             await Round.create(round);
